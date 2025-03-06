@@ -1,5 +1,6 @@
 package Package_2;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -8,7 +9,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class Topic_02_Selenium_Locator {
-
+    //Khai báo
     WebDriver driver;
 
     @BeforeClass
@@ -21,10 +22,17 @@ public class Topic_02_Selenium_Locator {
     }
 
     @Test
-    public void TC_01_Run_On_Firefox() {
-        driver = new FirefoxDriver();
-        driver.get("https://www.facebook.com/");
-        driver.quit();
+    public void TC_01_() {
+        // HTML source code
+        // Thẻ - Thuộc tính - Giá trị thuộc tính
+        // Tag name - Attribute - Value
+        // Xpath: //tagname[@attribute='value']
+        // Css:   //tagname[attribute='value']
+
+        // Tương tác lên element trên web
+        // 8 loại locator để tương tác với element của web
+        driver.findElement(By.id(""));
+
     }
 
     @Test
