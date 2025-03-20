@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.locators.RelativeLocator;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -177,6 +178,31 @@ public class Topic_02_Selenium_Locator {
 
         // Tìm element theo partial linktext
         driver.findElement(By.xpath("//a[contains(text(),'returns')]"));
+    }
+
+    @Test
+    public void TC_09_Relative_Locator() {
+        // Chỉ dùng Relative Locator khi:
+        // 1 - Không thể định danh được element của chính nó (dựa vào nhưng cái vị trí bên cạnh/ gần đó)
+        // 2 - Được sử dụng để test GUI (giao diện - position khớp với Design)
+
+        driver.get("https://demo.nopcommerce.com/login");
+        // Khai báo element sử dụng kiểu dữ liệu By
+        By rememberMeCheckboxBy = By.id("RememberMe");
+
+        By forgotPasswordLinkBy = By.cssSelector("span.forgot-password");
+
+        By passwordTextboxBy = By.cssSelector("input#Password");
+
+        By loginButtonBy = By.cssSelector("button.login-button");
+
+        driver.findElement(RelativeLocator.with(By.tagName("label")).above(loginButtonBy) // label nằm trên button Login
+                .below(passwordTextboxBy) // label nằm dưới textbox password
+                .toRightOf(rememberMeCheckboxBy) // label nằm bên phải của checkbox RememberMe
+                .toLeftOf(forgotPasswordLinkBy) // label nằm bên trái link Forgot password
+        );
+
+
     }
 
     //3- Clean: Delete data test/account/close browser/..
