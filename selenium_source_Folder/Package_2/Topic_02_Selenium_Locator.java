@@ -181,12 +181,14 @@ public class Topic_02_Selenium_Locator {
     }
 
     @Test
-    public void TC_09_Relative_Locator() {
+    public void TC_09_Relative_Locator() throws InterruptedException {
         // Chỉ dùng Relative Locator khi:
         // 1 - Không thể định danh được element của chính nó (dựa vào nhưng cái vị trí bên cạnh/ gần đó)
         // 2 - Được sử dụng để test GUI (giao diện - position khớp với Design)
 
         driver.get("https://demo.nopcommerce.com/login");
+
+        Thread.sleep(10000);
         // Khai báo element sử dụng kiểu dữ liệu By
         By rememberMeCheckboxBy = By.id("RememberMe");
 
@@ -200,10 +202,23 @@ public class Topic_02_Selenium_Locator {
                 .below(passwordTextboxBy) // label nằm dưới textbox password
                 .toRightOf(rememberMeCheckboxBy) // label nằm bên phải của checkbox RememberMe
                 .toLeftOf(forgotPasswordLinkBy) // label nằm bên trái link Forgot password
-        );
-
-
+                .near(rememberMeCheckboxBy).near(forgotPasswordLinkBy)
+                );
     }
+
+    @Test
+    public void TC_10_Xpath_Locator(){
+        // 1 - Duy nhất
+        // 2 - Ưu tiên nếu có id/ class/ name thì dùng trước
+        // 3 - Không có id/ class/ name: dùng bất k 1 attribuet khác
+        // 4 - Giá trị của attribute phải có ý nghĩa - liên quan tới cái element đó
+        // 5 - Đối với loại link thì không nên dùng thẻ href vì dễ bị thay đổi
+        // => Tối ưu nất để dùng
+
+        // Tìm kiếm theo kiểu: //*[@id='ABC'] => * đại diện cho bất kỳ thẻ nào
+        // 1 - Tìm tất cả các thẻ có id = ABC
+    }
+
 
     //3- Clean: Delete data test/account/close browser/..
     @AfterClass
