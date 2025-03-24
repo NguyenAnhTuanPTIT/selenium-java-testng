@@ -208,12 +208,26 @@ public class Topic_02_Selenium_Locator {
 
     @Test
     public void TC_10_Xpath_Locator(){
+        // Xpath tuyệt đối: đi từ node đầu tiên đến node cuối cùng - ko bỏ qua 1 node nào trung gian hết
+        // Ko nên sử dụng xpath tuyệt đối : vì dễ bị fail
+        // Ưu điểm: tìm element rất nhanh
+        // Nhược điểm:
+        // - Quá dễ lỗi / xấu/ khó đọc
+        // - Thay đổi giao diện => dễ fail
+
+        // Xpath tương đối: đi qua nhiều node, dùng dấu "//", có thể đi tới bất kì node nào mình muốn
+        // Nên sử dụng xpath tương đối
+        // Ưu điểm: ổn định hơn,ít fail
+        // Nhược điểm: tốc độ tìm element không nhanh
+
+
+
         // 1 - Duy nhất
         // 2 - Ưu tiên nếu có id/ class/ name thì dùng trước
         // 3 - Không có id/ class/ name: dùng bất k 1 attribuet khác
         // 4 - Giá trị của attribute phải có ý nghĩa - liên quan tới cái element đó
         // 5 - Đối với loại link thì không nên dùng thẻ href vì dễ bị thay đổi
-        // => Tối ưu nất để dùng
+        // => Tối ưu nhất để dùng
 
         // Tìm kiếm theo kiểu: //*[@id='ABC'] => * đại diện cho bất kỳ thẻ nào
         // 1 - Tìm tất cả các thẻ có id = ABC
