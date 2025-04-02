@@ -221,7 +221,6 @@ public class Topic_02_Selenium_Locator {
         // Nhược điểm: tốc độ tìm element không nhanh
 
 
-
         // 1 - Duy nhất
         // 2 - Ưu tiên nếu có id/ class/ name thì dùng trước
         // 3 - Không có id/ class/ name: dùng bất k 1 attribuet khác
@@ -231,6 +230,72 @@ public class Topic_02_Selenium_Locator {
 
         // Tìm kiếm theo kiểu: //*[@id='ABC'] => * đại diện cho bất kỳ thẻ nào
         // 1 - Tìm tất cả các thẻ có id = ABC
+
+        // Dùng start-with khi: giá trị/text thay đổi (trường hợp page load lại)
+        // Không support ends-with, bên CSS vẫn support được với cú pháp: $=
+
+        // - Tìm element theo điều kiện AND, VD: //button[@class='...' and @id='...']
+        // - Tìm element theo điều kiện OR, VD: //button[@class='...' or @id='...']
+
+        // - Tìm element theo điều kiện NOT, VD: //div[not(@style='A')]/div[@class='raDiv'] => Tìm element với điều kiện không có attribute style có giá trị là A mà tìm
+        // element với điều kiện có atrribute style có giá trị khác A
+        // => chỉ sử dụng được trong TH chắc chắn chỉ có 2 element thì mới dùng được kiểu phủ định này
+
+        // - Dùng hàm concat để nối chuỗi trong TH text có chứa ký tự dấu " và dấu '
+        //      VD: Hello Nam "the king", what's your job => cú pháp: //span[text()=concat('Hello Nam "the king", what',"'s your job")]
+        //   ====> Dùng nháy đôi bọc nháy đơn, dùng nháy đơn bọc nháy đôi
+
+//        - TH element cùng cấp và cùng 1 thẻ cha:
+//          + Tìm vị trí của số ở https://automationfc.github.io/jquery-selectable/
+//            Dùng cú pháp Xpath sau: //ol[@id='selectable']/li[5] => Tìm ra element ở vị trí thứ 5
+//            Hoặc có thể dùng Xpath sau với ý nghĩa tương đương: //ol[@id='selectable']/li[position()=10]
+//
+//          + Tìm element ở vị trí cuối: dùng hàm last()
+//            VD: //ol[@id='selectable']/li[last()] => luôn luôn lấy thằng cuối cùng
+//
+//          + Tìm element ở vị trí kế cuối: dùng hàm count() hoặc last()
+//          Hàm count()
+//            VD: //ol[@id='selectable']/li[count(//ol[@id='selectable']/li)-1] => element thứ 19 trong 20 element
+//            * Hàm count((//ol[@id='selectable']/li) sẽ cho kq = 20
+//
+//          Hàm last()
+//            VD: //ol[@id='selectable']/li[last()-1]
+//
+//
+//        - TH element cùng cấp nhưng không cùng 1 thẻ cha
+//          Button [Add to cart] ở https://live.techpanda.org/index.php/mobile.html
+//          Để tìm được các button tương ứng dùng cú pháp sau:
+//              - (//button[@title='Add to Cart'])[1]: tìm ra button [Add to cart] thứ nhất
+//              - (//button[@title='Add to Cart'])[2]: tìm ra button [Add to cart] thứ hai
+//              - (//button[@title='Add to Cart'])[3]: tìm ra button [Add to cart] thứ ba
+//          Việc dùng () để bọc lại đoạn Xpath: //button[@title='Add to Cart'] => coi như là 3 thằng này sẽ cùng 1 thằng cha
+//
+//
+//        - Kỹ thuật Xpath Axes: di chuyển qua các node cha/anh/em khác khi đang đứng ở node hiện tại
+//          + Muốn đi lên node cha: parent::tagname
+//          + Muốn đi lên node tổ tiên (cha/ông/cụ/kị/....): ancestor::tagname (Nếu đi ngược 2 lần parent thì thay thế bằng ancestor cho nhanh)
+//          + Muốn đi lên node anh: preceding-sibling::tagname
+//          + Muốn đi xuống node em: following-sibling::tagname
+//          + Muốn đi xuống node con: child::tagname
+//            VD: //a[@title='IPhone']/following-sibling::div/child::*  -> Lấy tất cả các thẻ con trực tiếp trong thẻ div
+//                  Hoặc có thể dùng: //a[@title='IPhone']/following-sibling::div/*
+//          + Muốn đi xuống node hậu duệ (con/cháu/chắt/chút/...): descendant::tagname
+//            VD 1: //a[@title='IPhone']/following-sibling::div/descendant::*  -> Lấy tất các các thẻ con trực tiếp và đồng thời thẻ cháu (nếu có)
+//                  Hoặc có thể dùng: //a[@title='IPhone']/following-sibling::div//*
+//            VD 2: //a[@title='IPhone']/following-sibling::div/descendant::span[@class='price']  -> Tìm cụ thể 1 descendant
+//
+//        VD: dùng https://live.techpanda.org/index.php/mobile.html -> tìm ra element button Add to cart thuộc Iphone để đảm bảo rằng nếu bị đổi vị trí ở HTML thì
+//        vẫn tìm được
+//        ----> Dùng cú pháp: //a[text()='IPhone']/parent::h2/following-sibling::div[@class='actions']/button
+//
+//        - Có thể dùng ".." để thay cho node cha: //a[text()='IPhone']/../following-sibling::div[@class='actions']/button
+//
+//        - Đối với cách này thì hạn chế dùng index nhất có thể:
+//        - Nếu dùng cú pháp://a[text()='IPhone']/parent::h2/following-sibling::div[3]/button -> thẻ div vẫn có thể bị thay đổi vị trí
+//        ======> Đây là tính năng truy ngược mà chỉ có XPath mới làm được, CSS không làm được
+
+
+
     }
 
 
