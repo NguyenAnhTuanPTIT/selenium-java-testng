@@ -135,7 +135,10 @@ public class Topic_02_Selenium_Locator {
         driver.findElement(By.cssSelector("#Company")); // Có thể viết tắt không cần dùng tên thẻ
         driver.findElement(By.cssSelector("input[id='Company']")); // Viết theo kiểu chuẩn
 
-        driver.findElement(By.cssSelector("button.register-next-step-button")); // Tìm theo class của element (không lấy hết giá trị của class)
+        driver.findElement(By.cssSelector("button.register-next-step-button")); // Tìm theo class của element (không lấy hết giá trị của class) nếu đang dùng dấu chấm
+        // - Cũng có thể viết theo cách này: button.register-next-step-button.button-1
+        // Hoặc có thể viết theo cách này: button.button-1.register-next-step-button
+
         driver.findElement(By.cssSelector("button[class='button-1 register-next-step-button']")); // Nếu viết theo kiểu chuẩn thì giá trị của class phải lấy hết
 
         driver.findElement(By.cssSelector("input[name='Password']")); // Tìm element theo name thì phải viết kiểu chuẩn
@@ -150,6 +153,30 @@ public class Topic_02_Selenium_Locator {
         driver.findElements(By.cssSelector("a")); // Tìm tất cả thẻ a
         driver.findElements(By.cssSelector("input")); // Tìm tất cả thẻ input
         driver.findElements(By.cssSelector("button")); // Tìm tất cả thẻ button
+
+        //---------------------------------------------------------------------
+        // - Đi qua 1 node: div > input[id='email']
+        // - Đi qua nhiều node: ul[class='form'] input[id='email']
+        // - Kết hợp với AND: input[class='form-id'][id='email']
+        // - Kết hợp với OR: input[id='password'],[id='email']
+        // - Kết hợp với NOT: input[not(id='password')] -> Kiếm các thẻ input mà attribue id không phải = 'password'
+        // - Kết hợp với contains: input[placeholder*='Search entire'] (placeholder hoàn chỉnh: Search entire engine price...)
+        // - Kết hợp với starts-with: input[placeholder^='Search entire']
+        // - Kết hợp với ends-with: input[placeholder$='price...']
+        // - Dùng following-sibling:
+        //   + a[title='IPhone']+div>h2+div -> tìm ra 1 div kế bên và ở dưới h2
+        //   + a[title='IPhone']+div>h2~div -> Nếu dưới h2 có bao nhiêu thẻ em là div thì sẽ lấy hết
+        // - TH tìm element trong cùng 1 node cha:
+        //   + a[title='IPhone']+div>h2:nth-child(1) => Không quan tâm đến tên thẻ con
+        //   + a[title='IPhone']+div>div:nth-of-type(2) => Quan tâm đến tên thẻ, chỉ   đánh index cho thẻ div
+        // - TH tìm element đầu tiên:
+        //   + a[title='IPhone']+div>h2:first-child -> h2 là con đầu tiên nên phải dùng h2
+        //   + a[title='IPhone']+div>div:last-child
+
+        // =====> CSS không dùng được hàm text()
+        // =====> CSS không đi ngược node
+        // =====> CSS không dùng được từ thẻ con lên cha/ông/cụ/kị
+        // =====> CSS không dùng được từ thẻ em lên thẻ anh
 
     }
 
@@ -278,7 +305,9 @@ public class Topic_02_Selenium_Locator {
 //          + Muốn đi xuống node em: following-sibling::tagname
 //          + Muốn đi xuống node con: child::tagname
 //            VD: //a[@title='IPhone']/following-sibling::div/child::*  -> Lấy tất cả các thẻ con trực tiếp trong thẻ div
-//                  Hoặc có thể dùng: //a[@title='IPhone']/following-sibling::div/*
+//                * Hoặc có thể dùng: //a[@title='IPhone']/following-sibling::div/*
+//                * Nếu muốn lấy node con cụ thể mà không quan tâm tới tên thẻ: 
+//                      a[@title='IPhone']/following-sibling::div/*[index], với index = 1, 2, 3, 4,...
 //          + Muốn đi xuống node hậu duệ (con/cháu/chắt/chút/...): descendant::tagname
 //            VD 1: //a[@title='IPhone']/following-sibling::div/descendant::*  -> Lấy tất các các thẻ con trực tiếp và đồng thời thẻ cháu (nếu có)
 //                  Hoặc có thể dùng: //a[@title='IPhone']/following-sibling::div//*
