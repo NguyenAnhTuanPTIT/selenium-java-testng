@@ -137,7 +137,7 @@ public class Topic_02_Selenium_Locator {
 
         driver.findElement(By.cssSelector("button.register-next-step-button")); // Tìm theo class của element (không lấy hết giá trị của class) nếu đang dùng dấu chấm
         // - Cũng có thể viết theo cách này: button.register-next-step-button.button-1
-        // Hoặc có thể viết theo cách này: button.button-1.register-next-step-button
+        // Hoặc có thể viết theo cách này: button.button-1.register-next-step-button, không quan trọng giá trị đứng trước hay đứng sau
 
         driver.findElement(By.cssSelector("button[class='button-1 register-next-step-button']")); // Nếu viết theo kiểu chuẩn thì giá trị của class phải lấy hết
 
@@ -254,6 +254,27 @@ public class Topic_02_Selenium_Locator {
         // 4 - Giá trị của attribute phải có ý nghĩa - liên quan tới cái element đó
         // 5 - Đối với loại link thì không nên dùng thẻ href vì dễ bị thay đổi
         // => Tối ưu nhất để dùng
+
+        // ------------------------------------------------------------------------------------------
+        // Tìm kiếm theo text()
+        // Điều kiện :
+        //  + Nằm cùng trên 1 hàng với thẻ chứa text đó, không nằm rải rác ở node con (dạng nested text)
+        //  + text có thể nằm ở đầu/ giữa/ cuối đều lấy được
+        //  + Lấy text tuyệt đối => ko có khỏảng trắng/ xuống dòng/ tab ở đầu hoặc cuối chuỗi
+        // ------------------------------------------------------------------------------------------
+        // Tìm kiếm theo contains[text(),'']
+        // Điều kiện :
+        //  + Nằm ở chính node chứa text đó
+        //  + Dạng nested text nhưng text phải nằm ở index đầu tiên
+        //  + Dạng nested text nhưng text nằm ở giữa hoặc cuối sẽ không lấy được
+        //  + Nếu text nằm trực tiếp trong child node thì không lấy được
+        //  + text có khoảng trắng/ xuống dòng/ tab ở đầu hoặc cuối vẫn work được
+        // ------------------------------------------------------------------------------------------
+        // Tìm kiếm theo contains(.,'') hoặc contains[string(),'']
+        // Điều kiện :
+        //  + Nằm ở chính node chứa text đó hoặc nằm trong child node ở bất kì vị trí nào, hoặc nested text ở bất kì vị trí nào
+        //  + text có khoảng trắng/ xuống dòng/ tab ở đầu hoặc cuối vẫn work được
+        // ==> contains(.,'') hoặc contains[string(),''] không bỏ qua bất kì case nào, nó sẽ tìm được text của hai hàm trên luôn
 
         // Tìm kiếm theo kiểu: //*[@id='ABC'] => * đại diện cho bất kỳ thẻ nào
         // 1 - Tìm tất cả các thẻ có id = ABC
