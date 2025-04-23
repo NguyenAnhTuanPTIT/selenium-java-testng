@@ -1,13 +1,13 @@
 package Package_2;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
+import org.openqa.selenium.bidi.log.Log;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.logging.Logs;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.testng.Assert;
@@ -18,6 +18,7 @@ import org.testng.annotations.Test;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class Topic_06_WebBrowser_Commands {
@@ -43,16 +44,16 @@ public class Topic_06_WebBrowser_Commands {
 
     //2- Action/Excute: Tương tác lên Element nào/nhập liệu/Verify/....
     @Test
-    public void TC_01_() {
-
+    public void TC_01_() throws MalformedURLException {
+        // Dòng lệnh nào được comment * thì sẽ được dùng nhiều trong dự án
         // Mở ra 1 URL bất kỳ (phải bắt đầu bằng http hoặc https, nếu không sẽ báo lỗi)
-        driver.get("https://demo.nopcommerce.com");
+        driver.get("https://demo.nopcommerce.com");  //*
 
         // Đóng browser (chỉ đóng cái nào driver đang đứng, hoặc trong TH nhiều tab => đóng tab đang active)
-        driver.close();
+        driver.close(); //*
 
         // Đóng browser (bao gồm các tab và windows)
-        driver.quit();
+        driver.quit(); //*
         // ==> driver.close(); và driver.quit(); chỉ giống nhau khi có 1 cửa sổ/1 tab duy nhất
 
         // Lấy ra title của page hiện tại (tên của page đó, nằm trên tab của browser)
@@ -83,25 +84,37 @@ public class Topic_06_WebBrowser_Commands {
         driver.getWindowHandles();
 
         // Đi tìm 1 Element
-        driver.findElement(By.xpath(""));
+        driver.findElement(By.xpath(""));  //*
 
         // Đi tìm nhiều Element
-        driver.findElements(By.xpath(""));
+        driver.findElements(By.xpath(""));  //*
+
+
+        //====================================== HÀM manage() =========================================================================
+        // Có thể khai báo biến options thay vì viết driver.manage()
+        WebDriver.Options options = driver.manage();
 
         // Selenium Version 3x - sẽ có dấu gạch ở popup gợi ý hàm, cho biết hàm đã lỗi thời
-        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(15, TimeUnit.DAYS);
-        driver.manage().timeouts().implicitlyWait(15, TimeUnit.MILLISECONDS);
-        driver.manage().timeouts().implicitlyWait(15, TimeUnit.MINUTES);
+        options.timeouts().implicitlyWait(15, TimeUnit.SECONDS); //*
+        options.timeouts().implicitlyWait(15, TimeUnit.DAYS);
+        options.timeouts().implicitlyWait(15, TimeUnit.MILLISECONDS);
+        options.timeouts().implicitlyWait(15, TimeUnit.MINUTES);
+
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.HOURS);
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.NANOSECONDS);
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.MICROSECONDS);
 
+        WebDriver.Timeouts timeouts = driver.manage().timeouts();
+
+
         // Selenium Version 4x
         // Dùng để chờ cho việc tìm element (findElement / findElements)
-        driver.manage().timeouts().implicitlyWait(Duration.ofDays(15));
-        driver.manage().timeouts().implicitlyWait(Duration.ofHours(15));
-        driver.manage().timeouts().implicitlyWait(Duration.ofMinutes(15));
+        options.timeouts().implicitlyWait(Duration.ofDays(15));
+
+        // Dùng biến timeouts ở trên để thay cho  driver.manage().timeouts()
+        timeouts.implicitlyWait(Duration.ofHours(15));
+        timeouts.implicitlyWait(Duration.ofMinutes(15));
+
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15)); // chờ hết trong thời gian để tìm Element, vượt thời gian đó sẽ fail
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(15));
         driver.manage().timeouts().implicitlyWait(Duration.ofNanos(15));
@@ -116,11 +129,18 @@ public class Topic_06_WebBrowser_Commands {
         // Thực tế cũng sẽ không cần đến hàm này
         driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(15));
 
+        // Khai báo biến window để thay cho driver.manage().window()
+        WebDriver.Window window = driver.manage().window();
+
         // Thu nhỏ browser về Taskbar để chạy
+        window.minimize();
+        // Hoặc có thể viết như sau:
         driver.manage().window().minimize();
 
         // Phóng to browser (vẫn còn thấy taskbar)
-        driver.manage().window().maximize();
+        window.maximize(); //*
+        // Hoặc có thể viết như sau:
+        driver.manage().window().maximize(); //*
 
         // Phóng to màn hình hết cỡ (không thấy taskbar)
         driver.manage().window().fullscreen();
@@ -137,8 +157,82 @@ public class Topic_06_WebBrowser_Commands {
         driver.manage().window().setPosition(new Point(0,0));
         driver.manage().window().getPosition();
 
+        // Lấy hết cookies ra
+        Set<Cookie> cookies = driver.manage().getCookies(); //*
 
-;
+        // Lấy cookies theo tên => trả về giá trị của cookie đó
+        driver.manage().getCookieNamed("cookies_name");
+
+        // Xóa hết tất cả cookies
+        driver.manage().deleteAllCookies();
+
+        // Xóa cookies theo thứ tự
+        for(Cookie cookie : cookies){
+            driver.manage().deleteCookie(cookie);
+        }
+
+        // Xóa cookies theo tên
+        driver.manage().deleteCookieNamed("cookies_name");
+
+        // Add cookies theo thứ tự
+        // Test Class 01: Register tài khoản - lưu cookie lại
+        Set<Cookie> cookies_01 = driver.manage().getCookies();
+
+        // Đến 1 Test Class khác 02/02/04... (Không cần Login - set cookie đã có vào đây rồi refresh lại)
+        for(Cookie cookie: cookies_01){
+            driver.manage().addCookie(cookie);
+        }
+        driver.navigate().refresh(); // Login thành công
+
+        // Hàm log
+        Logs log = driver.manage().logs();
+        LogEntries logEntries = log.get("BROWSER"); // Ít khi dùng
+
+        for(LogEntries logEntr:logEntries){
+            System.out.println(logEntr);
+        }
+
+        // Trả về toàn bộ Log Type
+        log.getAvailableLogTypes();
+        //=============================================================================================================================
+
+        //====================================== HÀM navigate() =========================================================================
+        // Khai báo biến
+        WebDriver.Navigation navigation = driver.navigate();
+
+        // Chức năng reload page (phím F5)
+        navigation.refresh();
+
+        // Giống tính năng back trên browser
+        navigation.back();
+
+        // Giống tính năng forward trên browser
+        navigation.forward();
+
+        // Mở 1 url bất kỳ, support tốt hơn mình cần dùng tới hàm forward() hoặc back() để lưu lại history
+        // Thực tế sẽ ít khi dùng
+        navigation.to("https://demo.nopcommerce.com/cart");
+
+        navigation.to(new URL("https://demo.nopcommerce.com/cart"));
+        //=============================================================================================================================
+
+        //====================================== HÀM switchTo() =======================================================================
+        // Dùng để swith tới Alert/Iframe/Tab
+
+        // Khai báo biến đại diện
+        WebDriver.TargetLocator targetLocator = driver.switchTo();
+
+        // Handle Alert
+        targetLocator.alert().accept(); //*
+        targetLocator.alert().dismiss(); //*
+
+        // Handle Frame / Iframe
+        targetLocator.frame(""); //*
+        targetLocator.defaultContent(); //*
+
+        // Handle Windows
+        targetLocator.window(""); //*
+        //=============================================================================================================================
     }
 
     @Test
