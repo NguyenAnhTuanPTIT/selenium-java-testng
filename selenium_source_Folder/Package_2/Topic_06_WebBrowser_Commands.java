@@ -149,6 +149,8 @@ public class Topic_06_WebBrowser_Commands {
         // Thực tế đùng để test Responsive bên manual / Test GUI (font, color, size, position, location)
         driver.manage().window().setSize(new Dimension(1920,1080));
         driver.manage().window().getSize();
+        //Có thể viết theo kiểu khai báo như sau:
+        Dimension dimensionBrowser = driver.manage().window().getSize();
 
 
         // Đưa browser đến vị trí mong muốn trên màn hình
@@ -156,6 +158,8 @@ public class Topic_06_WebBrowser_Commands {
         // Thưc tế sẽ ít dùng
         driver.manage().window().setPosition(new Point(0,0));
         driver.manage().window().getPosition();
+        //Có thể viết theo kiểu khai báo như sau:
+        Point pointBrowser = driver.manage().window().getPosition();
 
         // Lấy hết cookies ra
         Set<Cookie> cookies = driver.manage().getCookies(); //*
