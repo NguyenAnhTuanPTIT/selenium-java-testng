@@ -82,13 +82,13 @@ public class Topic_08_WebBrowser_Exercies {
         driver.findElement(By.xpath("//div[@class='footer']//a[text()='My Account']")).click();
 
         // Verify Login page chứa text = Login or Create an Account
-        Assert.assertTrue(driver.getPageSource().contains('Login or Create an Account'));
+        Assert.assertTrue(driver.getPageSource().contains("Login or Create an Account"));
 
         // Click vào button Create an Account
         driver.findElement(By.xpath("//a[@title='Create an Account']")).click();
 
         // Verify Login page chứa text = Create an Account
-        Assert.assertTrue(driver.getPageSource().contains('Create an Account'));
+        Assert.assertTrue(driver.getPageSource().contains("Create an Account"));
 
     }
 
