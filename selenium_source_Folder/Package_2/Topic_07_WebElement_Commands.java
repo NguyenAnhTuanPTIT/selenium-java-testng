@@ -103,11 +103,11 @@ public class Topic_07_WebElement_Commands {
 
         // Lấy ra giá trị của 1 thuộc tính trong thẻ html
         // Thực tế sẽ không dùng
-        element.getDomAttribute("");
+        element.getDomAttribute("title");
 
         // Lấy ra giá trị của 1 thuộc tính trong Tab Properties
         // Thực tế sẽ không dùng
-        element.getDomProperty();  // *
+        element.getDomProperty("name");  // *
 
         // Liên quan đến Popup
         element.getShadowRoot();  // *
@@ -115,7 +115,7 @@ public class Topic_07_WebElement_Commands {
         // Dùng để chụp hình, chỉ tiêt sẽ nói rõ hơn bên phần Framework
         element.getScreenshotAs(OutputType.FILE);  // *
         element.getScreenshotAs(OutputType.BASE64);  // *
-        element.getTagName(OutputType.BYTES);  // *
+        element.getScreenshotAs(OutputType.BYTES);  // *
 
         //=================================-----------===================================================================
     }
