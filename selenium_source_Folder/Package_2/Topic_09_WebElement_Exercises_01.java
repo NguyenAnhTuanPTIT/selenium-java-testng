@@ -1,12 +1,16 @@
 package Package_2;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.awt.image.Kernel;
 
 public class Topic_09_WebElement_Exercises_01 {
     //1- Setup: OS/Browser/Web/Page/ Data/Variable/Object/..
@@ -154,7 +158,80 @@ public class Topic_09_WebElement_Exercises_01 {
     }
 
     @Test
-    public void TC_04_MailChimp__Register_Validation() {
+    public void TC_04_MailChimp__Register_Validation() throws InterruptedException {
+        driver.get("https://login.mailchimp.com/signup/");
+
+        Thread.sleep(5000);
+
+        driver.findElement(By.cssSelector("input#email")).sendKeys("nguyenanhtuanptit123@gmail.com");
+        driver.findElement(By.cssSelector("input#email")).sendKeys(Keys.TAB);
+
+        Thread.sleep(5000);
+
+        // Chỉ nhập số, verify các message đánh dấu xanh và không được đánh dấu xanh
+        driver .findElement(By.cssSelector("input#new_password")).sendKeys("123");
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.lowercase-char.not-completed")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.uppercase-char.not-completed")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.number-char.completed")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.special-char.not-completed")).isDisplayed());
+        // TH có số trong giá trị của attribute class, sẽ không viết được kiểu này : li.8-char.not-completed
+        Assert.assertTrue(driver.findElement(By.cssSelector("li[class='8-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.username-check.not-completed")).isDisplayed());
+
+        // Chỉ nhập chữ thường, verify các message đánh dấu xanh và không được đánh dấu xanh
+        driver .findElement(By.cssSelector("input#new_password")).clear();
+        driver.findElement(By.cssSelector("input#new_password")).sendKeys("tuan");
+        driver.findElement(By.cssSelector("input#new_password")).sendKeys(Keys.TAB);
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.lowercase-char.completed")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.uppercase-char.not-completed")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.number-char.not-completed")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.special-char.not-completed")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.cssSelector("li[class='8-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.username-check.not-completed")).isDisplayed());
+
+        // Chỉ nhập chữ hoa, verify các message đánh dấu xanh và không được đánh dấu xanh
+        driver .findElement(By.cssSelector("input#new_password")).clear();
+        driver.findElement(By.cssSelector("input#new_password")).sendKeys("TUAN");
+        driver.findElement(By.cssSelector("input#new_password")).sendKeys(Keys.TAB);
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.lowercase-char.not-completed")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.uppercase-char.completed")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.number-char.not-completed")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.special-char.not-completed")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.cssSelector("li[class='8-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.username-check.not-completed")).isDisplayed());
+
+        // Chỉ nhập ký tự đặc biệt, verify các message đánh dấu xanh và không được đánh dấu xanh
+        driver .findElement(By.cssSelector("input#new_password")).clear();
+        driver.findElement(By.cssSelector("input#new_password")).sendKeys("!@#$");
+        driver.findElement(By.cssSelector("input#new_password")).sendKeys(Keys.TAB);
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.lowercase-char.not-completed")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.uppercase-char.not-completed")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.number-char.not-completed")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.special-char.completed")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.cssSelector("li[class='8-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.username-check.completed")).isDisplayed());
+
+        // Nhập nhiều hơn 8 ký tự, verify các message đánh dấu xanh và không được đánh dấu xanh
+        driver .findElement(By.cssSelector("input#new_password")).clear();
+        driver.findElement(By.cssSelector("input#new_password")).sendKeys("nguyenAnhtuanptit123@gmail.com");
+        driver.findElement(By.cssSelector("input#new_password")).sendKeys(Keys.TAB);
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.lowercase-char.completed")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.uppercase-char.completed")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.number-char.completed")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.special-char.completed")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.cssSelector("li[class='8-char completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.cssSelector("li.username-check.not-completed")).isDisplayed());
+
+        // Nhập giá trị hợp lệ, verify các message không hiển thị lên UI nữa
+        driver .findElement(By.cssSelector("input#new_password")).clear();
+        driver.findElement(By.cssSelector("input#new_password")).sendKeys("Ptit123@gmail");
+        driver.findElement(By.cssSelector("input#new_password")).sendKeys(Keys.TAB);
+        Assert.assertFalse(driver.findElement(By.cssSelector("li.lowercase-char.completed")).isDisplayed());
+        Assert.assertFalse(driver.findElement(By.cssSelector("li.uppercase-char.completed")).isDisplayed());
+        Assert.assertFalse(driver.findElement(By.cssSelector("li.number-char.completed")).isDisplayed());
+        Assert.assertFalse(driver.findElement(By.cssSelector("li.special-char.completed")).isDisplayed());
+        Assert.assertFalse(driver.findElement(By.cssSelector("li[class='8-char completed']")).isDisplayed());
+        Assert.assertFalse(driver.findElement(By.cssSelector("li.username-check.completed")).isDisplayed());
 
 
     }
