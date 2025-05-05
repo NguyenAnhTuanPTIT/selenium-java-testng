@@ -9,27 +9,36 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.Random;
+
 public class Topic_10_Textbox_TextArea {
     //1- Setup: OS/Browser/Web/Page/ Data/Variable/Object/..
 
     WebDriver driver;
+    String firstName = "Automation";
+    String lastName = "Selenium";
+    String fullName = firstName + " " + lastName;
+
+
+    Random rand = new Random();
+    String emailAddress = "autmation" + rand.nextInt(9999) + "@gmail.com";
 
     @BeforeClass
     public void initalBrowser(){
         driver = new ChromeDriver();
-        driver.get("https://www.facebook.com/");
+        driver.get("https://live.techpanda.org/");
     }
 
     //2- Action/Excute: Tương tác lên Element nào/nhập liệu/Verify/....
     @Test
-    public void TC_01_TechPanda() {
+    public void TC_01_TechPanda() throws InterruptedException {
         driver.findElement(By.xpath("//div[@class='footer']//a[text()='My Account']")).click();
 
         driver.findElement(By.xpath("//a[@title='Create an Account']")).click();
 
-        driver.findElement(By.cssSelector("input#firstname")).sendKeys("Autmation");
-        driver.findElement(By.cssSelector("input#lastname")).sendKeys("Selenium");
-        driver.findElement(By.cssSelector("input#email_address")).sendKeys("autmation1@gmail.com");
+        driver.findElement(By.cssSelector("input#firstname")).sendKeys(firstName);
+        driver.findElement(By.cssSelector("input#lastname")).sendKeys(lastName);
+        driver.findElement(By.cssSelector("input#email_address")).sendKeys(emailAddress);
         driver.findElement(By.cssSelector("input#password")).sendKeys("123abc");
         driver.findElement(By.cssSelector("input#confirmation")).sendKeys("123abc");
 
@@ -46,10 +55,10 @@ public class Topic_10_Textbox_TextArea {
 
         // Verify theo cách tương đối, vì text trong element đang có dạng nested text, text bị phân tán
         String contactInformationText = driver.findElement(By.xpath("//h3[text()='Contact Information']/parent::div/following-sibling::div/p")).getText();
-        Assert.assertTrue(contactInformationText.contains("Automation Selenium"));
-        Assert.assertTrue(contactInformationText.contains("automation1@gmail.com"));
+        Assert.assertTrue(contactInformationText.contains(fullName));
+        Assert.assertTrue(contactInformationText.contains(emailAddress));
         // Hoặc có thể viết kẹp như sau
-        Assert.assertTrue(contactInformationText.contains("Automation Selenium") && contactInformationText.contains("automation1@gmail.com"));
+        Assert.assertTrue(contactInformationText.contains(fullName) && contactInformationText.contains(emailAddress));
 
 
 
