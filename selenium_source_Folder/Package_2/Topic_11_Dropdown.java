@@ -73,6 +73,7 @@ public class Topic_11_Dropdown {
         // ===> Dùng visible sẽ trực quan hơn, dễ maintain code hơn
 
         // Chọn 1 option
+        // Hàm selectByVisibleText sẽ không care việc option đó có visible hay không, vì trong code xử lý đã chọn rồi
         select.selectByVisibleText("25");
 
         // TH nếu dùng hàm click() như dưới sẽ không được, vì ko giống hành vi END_USER
