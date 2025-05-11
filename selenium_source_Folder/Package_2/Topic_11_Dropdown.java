@@ -3,6 +3,7 @@ package Package_2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -14,6 +15,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
+import java.util.List;
 
 public class Topic_11_Dropdown {
     // DROPDOWN được gọi là default nếu được cấu thành từ thẻ select, các thẻ con bên trong là thẻ option
@@ -114,6 +116,27 @@ public class Topic_11_Dropdown {
 
     @Test
     public void TC_02_Login() {
+
+    }
+
+    @Test
+    public void TC_03_RODEdotcom() throws InterruptedException {
+
+        driver.get("https://rode.com/en/support/where-to-buy");
+
+        Thread.sleep(3000);
+
+        new Select(driver.findElement(By.cssSelector("select#country"))).selectByVisibleText("Vietnam");
+
+        driver.findElement(By.cssSelector("input#map_search_query")).sendKeys("HO CHI MINH");
+
+        driver.findElement(By.xpath("//button[text()='Search']")).click();
+
+        //List<WebElement> dealers = driver.findElements(By.cssSelector("h4.text-left"));
+        for(WebElement sub_dealer:driver.findElements(By.cssSelector("h4.text-left"))){
+            System.out.println( sub_dealer.getText());
+        }
+
 
     }
 

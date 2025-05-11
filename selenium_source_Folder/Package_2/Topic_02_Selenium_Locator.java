@@ -168,7 +168,7 @@ public class Topic_02_Selenium_Locator {
         //   + a[title='IPhone']+div>h2~div -> Nếu dưới h2 có bao nhiêu thẻ em là div thì sẽ lấy hết
         // - TH tìm element trong cùng 1 node cha:
         //   + a[title='IPhone']+div>h2:nth-child(1) => Không quan tâm đến tên thẻ con
-        //   + a[title='IPhone']+div>div:nth-of-type(2) => Quan tâm đến tên thẻ, chỉ   đánh index cho thẻ div
+        //   + a[title='IPhone']+div>div:nth-of-type(2) => Quan tâm đến tên thẻ, chỉ đánh index cho thẻ div
         // - TH tìm element đầu tiên:
         //   + a[title='IPhone']+div>h2:first-child -> h2 là con đầu tiên nên phải dùng h2
         //   + a[title='IPhone']+div>div:last-child
