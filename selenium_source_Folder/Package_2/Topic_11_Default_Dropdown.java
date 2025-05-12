@@ -5,7 +5,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -14,10 +13,9 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
 import java.util.List;
 
-public class Topic_11_Dropdown {
+public class Topic_11_Default_Dropdown {
     // DROPDOWN được gọi là default nếu được cấu thành từ thẻ select, các thẻ con bên trong là thẻ option
     // Khác với các điều kiện trên thì được gọi là CUSTOM Dropdown
 
@@ -132,9 +130,20 @@ public class Topic_11_Dropdown {
 
         driver.findElement(By.xpath("//button[text()='Search']")).click();
 
-        //List<WebElement> dealers = driver.findElements(By.cssSelector("h4.text-left"));
-        for(WebElement sub_dealer:driver.findElements(By.cssSelector("h4.text-left"))){
-            System.out.println( sub_dealer.getText());
+        Thread.sleep(3000);
+
+        Assert.assertEquals(driver.findElements(By.cssSelector("h4.text-left")).size(),16);
+
+        List<WebElement> dealers = driver.findElements(By.cssSelector("h4.text-left"));
+
+        // Dùng hàm for-each
+        for(WebElement sub_dealer:dealers){
+            System.out.println(sub_dealer.getText());
+        }
+
+        // Hoặc có thể dùng classic iteration
+        for (int i = 0; i < dealers.size(); i++) {
+            System.out.println(dealers.get(i).getText());
         }
 
 
