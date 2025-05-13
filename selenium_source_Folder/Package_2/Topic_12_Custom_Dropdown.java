@@ -1,19 +1,34 @@
 package Package_2;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
+
 public class Topic_12_Custom_Dropdown {
     //1- Setup: OS/Browser/Web/Page/ Data/Variable/Object/..
 
-    WebDriver driver;
+    WebDriver driver; //driver lúc này đang là null
 
+    WebDriverWait explicitWait;
     @BeforeClass
     public void initalBrowser(){
-        driver = new FirefoxDriver();
+        // Không được khai báo explicit trước khi new FirefoxDriver(), nếu đưa tham số driver = null vào sẽ bị sai =>
+        // => Do không biết đang chạy với trình duyệt nào, driver nào
+        // ====> Lỗi này sẽ xảy ra ở SELENIUM 3x
+        // ====> Từ SELENIUM 4x trở đi sẽ không bị lỗi này, do có xử lý cho trường hợp truyền driver bị null
+        explicitWait = new WebDriverWait(driver,Duration.ofSeconds(15));
+
+        driver = new FirefoxDriver(); // Luôn luôn phải khai báo đầu tiên
+
+        // Khai báo sau khi new FirefoxDriver()
+        explicitWait = new WebDriverWait(driver,Duration.ofSeconds(15));
 
     }
 
@@ -23,8 +38,15 @@ public class Topic_12_Custom_Dropdown {
 
         driver.get("https://jqueryui.com/resources/demos/selectmenu/default.html");
 
+
+        // TH nếu driver vẫn null và dùng các hảm của explicitWait => báo lõi
+        //explicitWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("")));
+
         // Hành vi (behavior) để thao tác lên Dropdown
         // 1 - Chờ cho dropdown có thể thao tác lên được (Clickable)
+        explicitWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("")));
+
+
         // Có 3 cách để Wait: ImplicitWait / WebDriverWait / FluentWait
         // ImplicitWait : wait ngầm định áp dụng cho việc tìm element - áp dụng cho 2 hàm: findElement/findElements
         // -> wait trong khoảng thời gian được set để tìm element, nếu hết khoảng tgian đó sẽ Fail

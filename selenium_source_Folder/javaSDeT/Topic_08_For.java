@@ -14,7 +14,10 @@ public class Topic_08_For {
 
         // FOR (classic - iterater)
         for (int i = 0; i < number; i++) {
-            System.out.println(i);
+            if (i == 5) {
+                System.out.println(i);
+                break; // Nếu i = 5 thì sau khi in ra màn hình sẽ thoát khỏi vòng lặp
+            }
         }
 
         // Collection: List / Set / Queue / Map
