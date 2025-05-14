@@ -16,7 +16,7 @@ public class Topic_09_List {
         // Khai báo kiểu List nhưng có thể new ArrayList => Do ArrayList kế thừa List
         List<String> name = new ArrayList<>();
         // Add phần tử vào List
-        name.add(("Ho Chi Minh");
+        name.add("Ho Chi Minh");
         name.add("Da Nang");
         name.add("Hue");
         name.add("Hai Phong");
