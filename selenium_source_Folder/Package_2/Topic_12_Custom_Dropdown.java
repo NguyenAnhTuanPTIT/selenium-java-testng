@@ -151,7 +151,6 @@ public class Topic_12_Custom_Dropdown {
         // 1 phần các option, các option còn lại sẽ không visible được
         // Lý do dùng không dùng thẻ li mà dùng div vì div chứa trực tiếp text option đó, nếu dùng thẻ li thì text lấy
         // ra có thể sẽ chứa nhiều ký tự không mong muốn khác
-
         // Hàm ExpectedConditions.presenceOfAllElementsLocatedBy() cơ chế cũng sẽ giống step 1 + 2
         List<WebElement> allItems = explicitWait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(childCss)));
 
