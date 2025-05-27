@@ -14,7 +14,7 @@ public class Topic_05_Random {
     @Test
     public void Random(){
         Random rand = new Random();
-        String fullEmail = prefixEmail + rand.nextInt(9999) + postfixEmail;
+        String fullEmail = prefixEmail + 123 + postfixEmail;
 
         System.out.println(fullEmail);
     }
