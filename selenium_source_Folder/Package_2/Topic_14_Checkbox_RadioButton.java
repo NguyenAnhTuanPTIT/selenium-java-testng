@@ -261,13 +261,13 @@ public class Topic_14_Checkbox_RadioButton {
             driver.findElement(mqCheckbox).click();
         }
         // Kiểm tra checkbox đã được check
-        Assert.assertEquals(driver.findElement(mqCheckbox).getDomAttribute("aria-checked"),"true");
+        Assert.assertEquals(driver.findElement(mqCheckbox).getAttribute("aria-checked"),"true");
 
         // Uncheck checkbox
         if(driver.findElement(mqCheckbox).getDomAttribute("aria-checked").equals("true")){
             driver.findElement(mqCheckbox).click();
         }
-        Assert.assertEquals(driver.findElement(mqCheckbox).getDomAttribute("aria-checked"),"false");
+        Assert.assertEquals(driver.findElement(mqCheckbox).getAttribute("aria-checked"),"false");
 
 
     }
