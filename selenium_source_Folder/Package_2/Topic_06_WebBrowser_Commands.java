@@ -1,7 +1,7 @@
 package Package_2;
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.bidi.log.Log;
+
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -96,14 +96,14 @@ public class Topic_06_WebBrowser_Commands {
         WebDriver.Options options = driver.manage();
 
         // Selenium Version 3x - sẽ có dấu gạch ở popup gợi ý hàm, cho biết hàm đã lỗi thời
-        options.timeouts().implicitlyWait(15, TimeUnit.SECONDS); //*
-        options.timeouts().implicitlyWait(15, TimeUnit.DAYS);
-        options.timeouts().implicitlyWait(15, TimeUnit.MILLISECONDS);
-        options.timeouts().implicitlyWait(15, TimeUnit.MINUTES);
+        options.timeouts().implicitlyWait(Duration.ofSeconds(15)); //*
+        options.timeouts().implicitlyWait(Duration.ofDays(15));
+        options.timeouts().implicitlyWait(Duration.ofHours(15));
+        options.timeouts().implicitlyWait(Duration.ofMinutes(15));
 
-        driver.manage().timeouts().implicitlyWait(15, TimeUnit.HOURS);
-        driver.manage().timeouts().implicitlyWait(15, TimeUnit.NANOSECONDS);
-        driver.manage().timeouts().implicitlyWait(15, TimeUnit.MICROSECONDS);
+        driver.manage().timeouts().implicitlyWait(Duration.ofHours(15));
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(15));
+        driver.manage().timeouts().implicitlyWait(Duration.ofNanos(15));
 
         WebDriver.Timeouts timeouts = driver.manage().timeouts();
 

@@ -72,9 +72,14 @@ public class Topic_07_WebElement_Commands {
 
         // Kiểm tra width và height của element
         Dimension dimensionElement = element.getSize(); // Trả về kiểu Dimension
+        dimensionElement.getHeight();
+        dimensionElement.getWidth();
 
         // Kiểm tra vị trí của element so với viewport (viewport là vùng mình nhìn thấy được tính từ phần dưới header chứa URL của browser cho đến phần nằm trên taskbar của Hệ điều hành)
+        // Vị trí của element sẽ được tính là độ phân giải của cạnh góc trên bên trái màn hình kéo đến mép trên bên trái của element đó
         Point pointElement = element.getLocation(); // Trả về kiểu Point
+        pointElement.getX();
+        pointElement.getY();
 
         // Tổng hợp của getSize() và getLocation();
         Rectangle rectangle = element.getRect();
