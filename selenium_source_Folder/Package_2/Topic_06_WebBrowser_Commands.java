@@ -157,7 +157,7 @@ public class Topic_06_WebBrowser_Commands {
         // Đưa browser đến vị trí mong muốn trên màn hình
         // Liên quan đến độ phân giải màn hình đang sử dụng
         // Thưc tế sẽ ít dùng
-        driver.manage().window().setPosition(new Point(0,0));
+        driver.manage().window().setPosition(new Point(0,0)); // Đưa browser về vị trí góc trên bên trái màn hình
         driver.manage().window().getPosition();
         //Có thể viết theo kiểu khai báo như sau:
         Point pointBrowser = driver.manage().window().getPosition();

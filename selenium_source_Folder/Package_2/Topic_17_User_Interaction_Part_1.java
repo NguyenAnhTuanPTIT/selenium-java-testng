@@ -11,7 +11,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 
-public class Topic_17_User_Interaction {
+public class Topic_17_User_Interaction_Part_1 {
     //1- Setup: OS/Browser/Web/Page/ Data/Variable/Object/..
 
     WebDriver driver;
@@ -24,6 +24,8 @@ public class Topic_17_User_Interaction {
         driver.manage().window().maximize();
 
         action = new Actions(driver);
+
+        action.moveByOffset(0,0).perform();
 
 
     }
