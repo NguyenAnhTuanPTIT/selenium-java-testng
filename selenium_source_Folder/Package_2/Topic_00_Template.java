@@ -8,6 +8,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
+
 public class Topic_00_Template {
     //1- Setup: OS/Browser/Web/Page/ Data/Variable/Object/..
 
@@ -16,6 +18,8 @@ public class Topic_00_Template {
     @BeforeClass
     public void initalBrowser(){
         driver = new FirefoxDriver();
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         driver.get("https://www.facebook.com/");
     }
 
