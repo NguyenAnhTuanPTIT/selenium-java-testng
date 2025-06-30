@@ -117,10 +117,6 @@ public class Topic_20_Frame_iFrame {
         Assert.assertEquals(driver.findElement(By.cssSelector("p.error-msg")).getText(),"Customer ID/IPIN (Password) is invalid. Please try again.");
 
 
-
-
-
-
     }
 
     //3- Clean: Delete data test/account/close browser/..
