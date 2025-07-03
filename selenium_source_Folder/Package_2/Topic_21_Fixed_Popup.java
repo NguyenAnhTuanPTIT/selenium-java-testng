@@ -139,21 +139,9 @@ public class Topic_21_Fixed_Popup {
 
         // Verify popup không còn hiển thị nữa (không còn trong DOM/HTML)
         // Cách assert này sẽ bị phụ thuộc vào impicitWait set ở trên là 15s nên sẽ khá lâu
+        // Có thể overwrite bằng cách set lại implicitWait
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         Assert.assertEquals(driver.findElements(loginPopup).size(),0);
-
-    }
-
-    @Test
-    public void TC_04_Facebook() throws InterruptedException {
-        driver.get("https://www.facebook.com/");
-        Thread.sleep(3000);
-
-        // Click vào button Create new account
-        driver.findElement(By.cssSelector("a[data-testid='open-registration-form-button']")).click();
-
-        // Verify popup hiển thị
-
-
 
     }
 
