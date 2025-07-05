@@ -20,13 +20,13 @@ public class Topic_00_Template {
         driver = new FirefoxDriver();
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-        driver.get("https://www.facebook.com/");
+
     }
 
     //2- Action/Excute: Tương tác lên Element nào/nhập liệu/Verify/....
     @Test
     public void TC_01_Register() {
-
+        driver.get("https://www.facebook.com/");
     }
 
     @Test
