@@ -25,18 +25,19 @@ public class Topic_00_Template {
 
     //2- Action/Excute: Tương tác lên Element nào/nhập liệu/Verify/....
     @Test
-    public void TC_01_Register() {
-        driver.get("https://www.facebook.com/");
+    public void TC_01_() {
+        driver.get("");
     }
 
     @Test
-    public void TC_02_Login() {
+    public void TC_02_() {
 
     }
 
     //3- Clean: Delete data test/account/close browser/..
     @AfterClass
     public void cleanBrowser() {
+
         driver.quit();
     }
 

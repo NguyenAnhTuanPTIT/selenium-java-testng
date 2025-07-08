@@ -2,7 +2,9 @@ package Package_2;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WindowType;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -15,6 +17,8 @@ public class Topic_23_Windows_Tab {
     //1- Setup: OS/Browser/Web/Page/ Data/Variable/Object/..
 
     WebDriver driver;
+
+    Select select;
 
     @BeforeClass
     public void initalBrowser(){
@@ -154,6 +158,118 @@ public class Topic_23_Windows_Tab {
 
 
     }
+
+    @Test
+    public void TC_03_Cambridge() throws InterruptedException {
+        driver.get("https://dictionary.cambridge.org/vi/");
+        Thread.sleep(3000);
+
+        // Lấy ra ID của page Cambridge
+        String cambridgeWindowID = driver.getWindowHandle();
+
+        // Click vào linktext Đăng nhập
+        driver.findElement(By.cssSelector("span.cdo-login-button")).click();
+        Thread.sleep(2000);
+
+        // Swtich qua window mới
+        switchToWindowByTitle("Login");
+
+        // Click vào button
+        driver.findElement(By.cssSelector("input[type='submit'][value = 'Log in']")).click();
+        Thread.sleep(2000);
+
+        // Verify hai message validate hiển thị ở 2 textbox username và password
+        Assert.assertEquals(driver.findElement(By.cssSelector("input[name='username']+span[id*='error-msg']")).getText()
+        , "This field is required");
+        Assert.assertEquals(driver.findElement(By.cssSelector("input[name='password']+span[id*='error-msg']")).getText()
+                , "This field is required");
+
+        // Close window đó đi và switch về trang trước đó
+        closeAllWindowWithoutParent(cambridgeWindowID);
+
+        // Điền giá trị vào ô search
+        driver.findElement(By.cssSelector("input[name='q']")).sendKeys("Selenium");
+
+        // Click button Search
+        driver.findElement(By.cssSelector("button.cdo-search-button")).click();
+        Thread.sleep(3000);
+
+        // Verify trang với từ khóa vừa tìm kiếm
+        Assert.assertTrue(driver.getTitle().contains("SELENIUM"));
+        // Verify từ khóa tìm kiếm hiển thị trên màn hình
+        Assert.assertEquals(driver.findElement(By.cssSelector("div#cald4-1~div.pos-header div.di-title")).getText(),"selenium");
+
+    }
+
+    @Test
+    public void TC_04_Harvard() throws InterruptedException {
+        driver.get("https://courses.dce.harvard.edu/");
+        Thread.sleep(3000);
+
+        // Lấy ra ID của page Harvard
+        String harvardWindowID = driver.getWindowHandle();
+
+        // Click vào button Student Login
+        driver.findElement(By.cssSelector("a[data-action='login']")).click();
+        Thread.sleep(2000);
+
+        // Switch qua window mới
+       switchToWindowID(harvardWindowID);
+       Thread.sleep(3000);
+
+       // Verify title của window mới được mở
+       Assert.assertEquals(driver.getTitle(),"Harvard Division of Continuing Education Login Portal");
+
+       // Đóng window đó đi
+       closeAllWindowWithoutParent(harvardWindowID);
+
+       // Verify popup Authentication hiển thị
+       Assert.assertTrue(driver.findElement(By.cssSelector("div#sam-wait")).isDisplayed());
+
+       // Đóng poup lại
+       driver.findElement(By.cssSelector("button.sam-wait__close")).click();
+
+       // Nhập từ khóa vào textbox Keyword
+       driver.findElement(By.cssSelector("input#crit-keyword")).sendKeys("Science Computer");
+
+       // Chọn giá trị bất kì trong selecbox Term
+       select = new Select(driver.findElement(By.cssSelector("select#crit-srcdb")));
+       select.selectByVisibleText("Extension All Terms 2025-2026");
+
+       // Chọn giá trị bát kì trong selectbox Part of Term
+       select = new Select(driver.findElement(By.cssSelector("select#crit-session")));
+       select.selectByVisibleText("Full Term");
+
+       // Click button Search
+       driver.findElement(By.cssSelector("button#search-button")).click();
+       Thread.sleep(3000);
+
+       // Verify thông tin Course được hiển thị
+       Assert.assertTrue(driver.findElements(By.cssSelector("div.result--group-start span.result__title")).get(0).getText().contains("Computer Science"));
+
+    }
+
+    @Test
+    public void TC_05_Selenium_4x() throws InterruptedException {
+        // Selenium 3 không support việc new một tab/window mới
+        // Selenium 4 thì có support thông qua hàm newWindow()
+
+        driver.get("http://live.techpanda.org/");
+        Thread.sleep(3000);
+
+        // Click vào tab Mobile
+        driver.findElement(By.xpath("//a[text()='Mobile']")).click();
+        Thread.sleep(2000);
+
+        // Mở một tab mới có chứa url mong muốn
+        // Khi thực hiện hàm này thì window ID sẽ thay đổi, nhưng driver ID vẫn giữ nguyên
+        // Hành vi này giống như Business/End User side vì khi mở tab/window mới thì sẽ tự động switch qua luôn
+        // Hành vi này mang tính chủ động của End user, giống như việc click chuột phải -> Open new tab/window
+        driver.switchTo().newWindow(WindowType.TAB).get("https://live.techpanda.org/index.php/customer/account/");
+        driver.switchTo().newWindow(WindowType.WINDOW).get("https://live.techpanda.org/index.php/catalog/seo_sitemap/category/");
+
+    }
+
 
     private void closeAllWindowWithoutParent(String uniqueRestWindowID) throws InterruptedException {
         // Tiếp tục lấy hết tooàn bộ các ID của window/tab
