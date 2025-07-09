@@ -1,5 +1,6 @@
 package Package_2;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,6 +10,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
+import java.util.List;
 
 public class Topic_25_Javascript_Excutor {
     //1- Setup: OS/Browser/Web/Page/ Data/Variable/Object/..
@@ -30,6 +32,9 @@ public class Topic_25_Javascript_Excutor {
     public void TC_01_() {
         // --------------------------------- Ngữ cảnh dùng JavascriptExcutor ---------------------------------------------------
         // Nếu có xử lý nào mà Selenium không hỗ trợ, thì bên JavascriptExcutor có thể support được
+        // JavascriptExcutor không quan hiển thị hay không, nếu như có trong HTML sẽ tương tác được => Dễ bị sai hành vi của user
+
+        // Còn nếu dùng selenium thì không hiển thị sẽ không tương tác được
 
         driver.get("https://demo.nopcommerce.com/register?returnUrl=%2F");
 
@@ -49,6 +54,37 @@ public class Topic_25_Javascript_Excutor {
         // Khi muốn return về kiểu dữ liệu gì thì phải ép về kiếu đó
         WebElement searchTextbox = (WebElement) jsExcutor.executeScript("return document.querySelector('input#small-searchterms');");
         searchTextbox.sendKeys("automationfc.vn");
+
+        // Lấy ra 1 list WebElement từ jsExcutor
+        List<WebElement> emailTypeTextbox = (List<WebElement>) jsExcutor.executeScript("document.querySelectorAll(\"input[type='email']\")");
+
+        // Click vào một element mà không quan tâm nó hiển thị/ẩn đi
+        jsExcutor.executeScript("arguments[0].click();",driver.findElement(By.cssSelector("ul.top-menu.notmobile a[href='/desktops']")));
+
+        // Refresh browser
+        jsExcutor.executeScript("history.go(0)");
+
+        // Lấy hết toàn bộ text của 1 trang
+        jsExcutor.executeScript("return document.documentElement.innerText;");
+
+        // Scroll 50 pixels
+        jsExcutor.executeScript("window.scrollBy(0,50);");
+
+        // Scroll into view
+        // True là kéo mép trên của element lên trên cùng, đụng với viewport
+        // False là kéo mép dưới xuống dưới cùng , đụng với viewport
+
+        jsExcutor.executeScript("document.querySelector(\"input#newsletter-email\").scrollIntoView(true);");
+
+        // Scroll đến cuối trang
+        jsExcutor.executeScript("window.scrollBy(0,document.body.scrollHeight);");
+
+        // Mở ra một page khác bất kì
+        jsExcutor.executeScript("window.location =\"https://www.jetbrains.com/\";");
+
+        // Remove một attribute của 1 element
+        jsExcutor.executeScript("document.querySelector('input#newsletter-email').removeAttribute('class');")
+
     }
 
     @Test
