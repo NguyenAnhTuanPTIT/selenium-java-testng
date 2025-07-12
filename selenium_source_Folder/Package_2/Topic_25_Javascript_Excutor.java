@@ -28,7 +28,7 @@ public class Topic_25_Javascript_Excutor {
     @BeforeClass
     public void initalBrowser(){
         driver = new FirefoxDriver();
-        jsExcutor = (JavascriptExecutor) driver;
+        jsExecutor = (JavascriptExecutor) driver;
         explicitWait = new WebDriverWait(driver,Duration.ofSeconds(15));
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
@@ -48,50 +48,50 @@ public class Topic_25_Javascript_Excutor {
 
         // Lấy title của browser
         driver.getTitle();
-        System.out.println("Get title by jsExcutor : " + jsExcutor.executeScript("return document.title;"));
+        System.out.println("Get title by jsExcutor : " + jsExecutor.executeScript("return document.title;"));
 
         // Lấy ra URL
         driver.getCurrentUrl();
-        System.out.println("Get URL by jsExcutor : " + jsExcutor.executeScript("return document.URL;"));
+        System.out.println("Get URL by jsExcutor : " + jsExecutor.executeScript("return document.URL;"));
 
         // Lấy ra domain, phải dùng jsExcutor
         // Thử trên tab console của browser trước
-        System.out.println(jsExcutor.executeScript("return document.domain;"));
+        System.out.println(jsExecutor.executeScript("return document.domain;"));
 
         // Lấy ra 1 WebElement và thao tác lên element
         // Khi muốn return về kiểu dữ liệu gì thì phải ép về kiếu đó
-        WebElement searchTextbox = (WebElement) jsExcutor.executeScript("return document.querySelector('input#small-searchterms');");
+        WebElement searchTextbox = (WebElement) jsExecutor.executeScript("return document.querySelector('input#small-searchterms');");
         searchTextbox.sendKeys("automationfc.vn");
 
         // Lấy ra 1 list WebElement từ jsExcutor
-        List<WebElement> emailTypeTextbox = (List<WebElement>) jsExcutor.executeScript("document.querySelectorAll(\"input[type='email']\")");
+        List<WebElement> emailTypeTextbox = (List<WebElement>) jsExecutor.executeScript("document.querySelectorAll(\"input[type='email']\")");
 
         // Click vào một element mà không quan tâm nó hiển thị/ẩn đi
-        jsExcutor.executeScript("arguments[0].click();",driver.findElement(By.cssSelector("ul.top-menu.notmobile a[href='/desktops']")));
+        jsExecutor.executeScript("arguments[0].click();",driver.findElement(By.cssSelector("ul.top-menu.notmobile a[href='/desktops']")));
 
         // Refresh browser
-        jsExcutor.executeScript("history.go(0)");
+        jsExecutor.executeScript("history.go(0)");
 
         // Lấy hết toàn bộ text của 1 trang
-        jsExcutor.executeScript("return document.documentElement.innerText;");
+        jsExecutor.executeScript("return document.documentElement.innerText;");
 
         // Scroll 50 pixels
-        jsExcutor.executeScript("window.scrollBy(0,50);");
+        jsExecutor.executeScript("window.scrollBy(0,50);");
 
         // Scroll into view
         // True là kéo mép trên của element lên trên cùng, đụng với viewport
         // False là kéo mép dưới xuống dưới cùng , đụng với viewport
 
-        jsExcutor.executeScript("document.querySelector(\"input#newsletter-email\").scrollIntoView(true);");
+        jsExecutor.executeScript("document.querySelector(\"input#newsletter-email\").scrollIntoView(true);");
 
         // Scroll đến cuối trang
-        jsExcutor.executeScript("window.scrollBy(0,document.body.scrollHeight);");
+        jsExecutor.executeScript("window.scrollBy(0,document.body.scrollHeight);");
 
         // Mở ra một page khác bất kì
-        jsExcutor.executeScript("window.location =\"https://www.jetbrains.com/\";");
+        jsExecutor.executeScript("window.location =\"https://www.jetbrains.com/\";");
 
         // Remove một attribute của 1 element
-        jsExcutor.executeScript("document.querySelector('input#newsletter-email').removeAttribute('class');");
+        jsExecutor.executeScript("document.querySelector('input#newsletter-email').removeAttribute('class');");
 
     }
 
@@ -166,6 +166,148 @@ public class Topic_25_Javascript_Excutor {
 
     @Test
     public void TC_03_TechPanda_Using_Methods(){
+        navigateToUrlByJS("https://live.techpanda.org/");
+        // Wait cho URL được load ra thành công
+        explicitWait.until(ExpectedConditions.urlToBe("https://live.techpanda.org/"));
+
+        // Get về domain của page và verify
+        Assert.assertEquals(getDomain(),"live.techpanda.org");
+
+        // Verify URL của page
+        Assert.assertEquals(getURL(),"https://live.techpanda.org/");
+
+        // Click vào tab MOBILE
+        // Trước khi click vào tab MOBILE, wait cho đến khi element có thể click được
+        explicitWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[text()='Mobile']")));
+        clickToElementByJS("//a[text()='Mobile']");
+
+        sleepInSecond(3);
+
+        // Click vào Add to cart của SAMSUNG GALAXY
+        // Trước khi click vào Add to cart, wait cho đên khi element đó có thể click được
+        explicitWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[text()='Samsung Galaxy']//parent::h2//" +
+                "following-sibling::div[@class='actions']//button")));
+        clickToElementByJS("//a[text()='Samsung Galaxy']//parent::h2//" +
+                "following-sibling::div[@class='actions']//button");
+
+        sleepInSecond(3);
+
+        // Verify message hiển thị sau khi add sản phẩm thành công
+        Assert.assertTrue(getInnerText().contains("Samsung Galaxy was added to your shopping cart."));
+
+        // Click vào linktext customer service
+        explicitWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[text()='Customer Service']")));
+        clickToElementByJS("//a[text()='Customer Service']");
+
+        sleepInSecond(3);
+
+        // Scroll tới textbox News letter nằm ở cuối page
+        scrollToElementOnTop("//input[@id='newsletter']");
+        sleepInSecond(3);
+
+        // Nhập giá trị hợp lệ vào trong textbox News letter
+        sendkeyToElementByJS("//input[@id='newsletter']",email);
+
+        // Click button Subcribe
+        clickToElementByJS("//button[@title='Subscribe']");
+
+        sleepInSecond(3);
+
+        driver.switchTo().alert().accept();
+
+        sleepInSecond(3);
+
+        // Verify message hiển thị sau khi subcrribe thành công
+        Assert.assertTrue(getInnerText().contains("Thank you for your subscription."));
+
+        // Chuyển qua trang khác
+        navigateToUrlByJS("https://facebook.com/");
+
+    }
+
+    @Test
+    public void TC_04_HTML5_Validation_Message(){
+        // Dạng HTML55 message này kiểu như 1 tooltips, không thể bắt được bằng cách thông thường được
+        driver.get("https://account.rode.com/login");
+        sleepInSecond(3);
+
+        // Click vào button Sign in
+        WebElement buttonSubmit = driver.findElement(By.cssSelector("button[type='submit']"));
+        buttonSubmit.click();
+        sleepInSecond(3);
+
+        // T/H để trống email
+        String emptyEmailMessage = getElementValidationMessage("//input[@id='email']");
+        Assert.assertEquals(emptyEmailMessage,"Vui lòng điền vào trường này.");
+
+        // Nhập giá trị vào textbox email
+        String invalidEmailData = "aaa";
+        WebElement textboxEmail = driver.findElement(By.xpath("//input[@id='email']"));
+        textboxEmail.sendKeys(invalidEmailData);
+
+        buttonSubmit.click();
+        sleepInSecond(3);
+
+        // T/H input giá trị không hợp lệ, sẽ có sự khác biệt giữa 2 browser khi ban đầu chọn
+        String invalidEmail = getElementValidationMessage("//input[@id='email']");
+
+        if(driver.toString().contains("ChromeDriver")){
+            // Verify message nếu đang dùng Chrome
+            Assert.assertEquals(invalidEmail, "Vui lòng bao gồm '@' trong địa chỉ email. '" + invalidEmailData + "' bị thiếu '@'.");
+        }else {
+            // Verify message nếu đang dùng Firefox
+            Assert.assertEquals(invalidEmail, "Vui lòng điền một địa chỉ email.");
+        }
+
+        // Xóa giá trị trước đó ở textbox email
+        textboxEmail.clear();
+
+        // T/H input giá trị không hợp lệ lần 2
+        invalidEmailData = "aaa@";
+        textboxEmail.sendKeys(invalidEmailData);
+
+        buttonSubmit.click();
+        sleepInSecond(3);
+
+        invalidEmail = getElementValidationMessage("//input[@id='email']");
+
+        if(driver.toString().contains("ChromeDriver")){
+            Assert.assertEquals(invalidEmail, "Vui lòng nhập phần đứng sau '@'. '" + invalidEmailData + "' không hoàn chỉnh.'");
+        }else {
+            Assert.assertEquals(invalidEmail, "Vui lòng điền một địa chỉ email.");
+        }
+
+        // Xóa giá trị trước đó ở textbox email
+        textboxEmail.clear();
+
+        // T/H input giá trị không hợp lệ lần 3
+        invalidEmailData = "aaa@aaa.";
+        textboxEmail.sendKeys(invalidEmailData);
+
+        buttonSubmit.click();
+        sleepInSecond(3);
+
+        invalidEmail = getElementValidationMessage("//input[@id='email']");
+
+        if(driver.toString().contains("ChromeDriver")){
+            Assert.assertEquals(invalidEmail, "'.' bị sử dụng sai vị trí trong '" + invalidEmailData.split("@")[1] + "'.");
+        }else {
+            Assert.assertEquals(invalidEmail, "Vui lòng điền một địa chỉ email.");
+        }
+
+        // Xóa giá trị trước đó ở textbox email
+        textboxEmail.clear();
+
+        // Nhập giá trị hợp lệ vào textbox email
+        textboxEmail.sendKeys(email);
+        buttonSubmit.click();
+        sleepInSecond(3);
+
+        String invalidPassword = getElementValidationMessage("//input[@id='password']");
+
+        // Verify message hiển thị
+        Assert.assertEquals(invalidPassword,"Vui lòng điền vào trường này.");
+
 
     }
 
@@ -189,6 +331,16 @@ public class Topic_25_Javascript_Excutor {
     public boolean isExpectedTextInInnerText(String textExpected) {
         String textActual = (String) jsExecutor.executeScript("return document.documentElement.innerText.match('" + textExpected + "')[0];");
         return textActual.equals(textExpected);
+    }
+
+    public String getDomain() {
+        String domain = (String) jsExecutor.executeScript("return document.domain;");
+        return domain;
+    }
+
+    public String getURL() {
+        String domain = (String) jsExecutor.executeScript("return document.URL;");
+        return domain;
     }
 
     public void scrollToBottomPage() {
