@@ -86,7 +86,7 @@ public class Topic_27_Wait_Element_Status {
         // ------------------------- Element có trong UI và trong cây HTML ---------------------------------
         explicitWait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[name='reg_email_confirmtion']")));
 
-        // Tiếp tục có thêm 1 điền kiện mồi để cho textbox Confrim email không còn xuất hiện trên UI nữa
+        // Tiếp tục có thêm 1 điều kiện mồi để cho textbox Confirm email không còn xuất hiện trên UI nữa
         driver.findElement(By.cssSelector("input[name='reg_email_']")).clear();
 
         // ------------------------- Element không có trong UI nhưng có trong cây HTML ---------------------------------
