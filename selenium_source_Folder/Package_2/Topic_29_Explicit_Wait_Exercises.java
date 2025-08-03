@@ -2,6 +2,7 @@ package Package_2;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -90,14 +91,19 @@ public class Topic_29_Explicit_Wait_Exercises {
         // Khi click button icon loading sẽ hiển thị trong vòng 5s
 
         // Visible (Dành cho 1 element ở step sau xuất hiện)
-        explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div#finish>h4")));
+        // => Cách wait visible sẽ phù hợp, do code đọc dễ hiểu nhất, và verify được kết quả rõ ràng nhất
+        WebElement helloText = explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div#finish>h4")));
+        Assert.assertEquals(helloText.getText(), "Hello World!");
 
         // Invisible (dành cho 1 element sắp biến mất / kì vọng mất đi)
         // Tìm icon loading để dùng cho wait này
-        explicitWait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div#loading")));
+        // => Cách wait này sẽ đi qua thêm một step để verify text nữa
+        boolean loadingIconStatus = explicitWait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div#loading")));
+        Assert.assertTrue(loadingIconStatus);
 
-        // Text ()
-        explicitWait.until(ExpectedConditions.textToBe(By.cssSelector("div#finish>h4"),"Hello World!"));
+        // Text (dành để chờ cho 1 element có chứa text đó hiện ra)
+        boolean helloTextStatus = explicitWait.until(ExpectedConditions.textToBe(By.cssSelector("div#finish>h4"),"Hello World!"));
+        Assert.assertTrue(helloTextStatus);
 
         Assert.assertEquals(driver.findElement(By.cssSelector("div#finish>h4")).getText(),"Hello World!");
         // Trả lỗi No Such Element do thời gian explicit wait nhỏ hơn thời gian hoàn thành của icon loading

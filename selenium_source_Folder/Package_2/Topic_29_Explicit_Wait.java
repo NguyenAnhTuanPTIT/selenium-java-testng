@@ -132,6 +132,7 @@ public class Topic_29_Explicit_Wait {
         explicitWait.until(ExpectedConditions.numberOfWindowsToBe(3));
 
         // Wait cho 1 đoạn text bằng tuyệt đối (dùng trước hàm getText() )
+        // Hàm textToBe sẽ chờ cho text đó hiển thị trên UI mới trả về True
         explicitWait.until(ExpectedConditions.textToBe(By.cssSelector(""),""));
         explicitWait.until(ExpectedConditions.textMatches(By.cssSelector(""), Pattern.compile("a*b")));
 
