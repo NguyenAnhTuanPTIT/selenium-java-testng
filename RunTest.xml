@@ -3,8 +3,21 @@
 
 <suite name="Suite1" verbose="1">
     <test name="Regression1">
-        <classes>
-            <class name="testng.Topic_01_Annotations"/>
-        </classes>
+        <groups>
+            <run>
+                <!-- Tại đây sẽ dựa vào package nào có name như trong thẻ include thì sẽ được chạy -->
+                <!-- <include name="regression"/>                                                  -->
+
+                <!-- Nếu dùng exclude thì sẽ chỉ chạy tất cả các class trong package mà testcase group không chứa
+                name = regression, còn hai packkage Payment, Product sẽ không chạy do trong testcase group có chứa name = regression -->
+                <exclude name="regression"/>
+            </run>
+        </groups>
+
+        <packages>
+            <package name="Payment"></package>
+            <package name="Product"></package>
+            <package name="testng"></package>
+        </packages>
     </test>
 </suite>
