@@ -2,22 +2,47 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 
 <suite name="Suite1" verbose="1">
-    <test name="Regression1">
-        <groups>
-            <run>
-                <!-- Tại đây sẽ dựa vào package nào có name như trong thẻ include thì sẽ được chạy -->
-                <!-- <include name="regression"/>                                                  -->
+    <!-- Nếu khai báo parameter ngoài này thì  sẽ dùng cho  tất cả các test ở dưới -->
+<!--    <parameter name="server" value="Dev" />-->
 
-                <!-- Nếu dùng exclude thì sẽ chỉ chạy tất cả các class trong package mà testcase group không chứa
-                name = regression, còn hai packkage Payment, Product sẽ không chạy do trong testcase group có chứa name = regression -->
-                <exclude name="regression"/>
-            </run>
-        </groups>
+<!--    <test name="Regression1">-->
+<!--        <groups>-->
+<!--            <run>-->
+<!--                &lt;!&ndash; Tại đây sẽ dựa vào package nào có name như trong thẻ include thì sẽ được chạy &ndash;&gt;-->
+<!--                &lt;!&ndash; <include name="regression"/>                                                  &ndash;&gt;-->
 
-        <packages>
-            <package name="Payment"></package>
-            <package name="Product"></package>
-            <package name="testng"></package>
-        </packages>
+<!--                &lt;!&ndash; Nếu dùng exclude thì sẽ chỉ chạy tất cả các class trong package mà testcase group không chứa-->
+<!--                name = regression, còn hai packkage Payment, Product sẽ không chạy do trong testcase group có chứa name = regression &ndash;&gt;-->
+<!--                <exclude name="regression"/>-->
+<!--            </run>-->
+<!--        </groups>-->
+
+<!--        <packages>-->
+<!--            <package name="Payment"></package>-->
+<!--            <package name="Product"></package>-->
+<!--            <package name="testng"></package>-->
+<!--        </packages>-->
+<!--    </test>-->
+
+    <!-- Chạy trên nhiều trình duyệt, áp dụng TestNG Paramenter    -->
+    <test name="Run on Chrome">
+        <parameter name="browser" value="Chrome"/>
+        <classes>
+            <class name="testng.Topic_09_Multi_Browser"/>
+        </classes>
+    </test>
+
+    <test name="Run on Edge">
+        <parameter name="browser" value="Edge"/>
+        <classes>
+            <class name="testng.Topic_09_Multi_Browser"/>
+        </classes>
+    </test>
+
+    <test name="Run on Firefox">
+        <parameter name="browser" value="Firefox"/>
+        <classes>
+            <class name="testng.Topic_09_Multi_Browser"/>
+        </classes>
     </test>
 </suite>
