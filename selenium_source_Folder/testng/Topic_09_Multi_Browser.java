@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.safari.SafariDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
@@ -21,7 +22,7 @@ public class Topic_09_Multi_Browser {
     String userName = "selenium_11_01@gmail.com";
     String password = "111111";
 
-    String projectPath = System.getProperty("user.dir");
+    //  String projectPath = System.getProperty("user.dir");
 
     /*
         @BeforeClass
@@ -59,12 +60,35 @@ public class Topic_09_Multi_Browser {
         else if (browserName.equalsIgnoreCase("firefox")) {
             driver = new FirefoxDriver();
         }
+        else if (browserName.equalsIgnoreCase("safari")) {
+            driver = new SafariDriver();
+        }
+
         // Nếu truyền vào không đúng tên 3 browser trên (Vd như truyền vào opera, safari,...), sẽ văng ra 1 ngoại lệ
         else {
             throw new RuntimeException("Browser name is not valid");
         }
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+
+        // Có thể dùng switch-case thay if ở trên
+        // Việc dùng switch-case có thể tránh được trường hợp khi dùng hàm equalsIgnoreCase() có thể sẽ có 2 giá trị
+        // giống nhau trong hàm, VD : sẽ equalsIgnoreCase 2 lần "firefox"  nhưng vẫn new SafariDriver
+        switch (browserName){
+            case "Chrome":
+                driver = new ChromeDriver();
+            case "Edge":
+                driver = new EdgeDriver();
+            case "Firefox":
+                driver = new FirefoxDriver();
+            case "Safari":
+                driver = new SafariDriver();
+            default:
+                // Trong switch-case không dùng throw, vì  phải return dữ liệu
+                new RuntimeException("Browser name is not valid");
+        }
+
+
     }
 
 
@@ -72,7 +96,6 @@ public class Topic_09_Multi_Browser {
     // Cũng có thể khai báo @Paramters ở đây
     public void loginOnMultipleBrowser() throws InterruptedException {
         driver.get("http://live.techpanda.org/index.php/customer/account/login/");
-        Thread.sleep(5000);
 
         driver.findElement(emailTextbox).sendKeys(userName);
         driver.findElement(passwordTextbox).sendKeys(password);
