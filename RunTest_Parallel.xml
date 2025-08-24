@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Suite1" verbose="1"  parallel= "tests" thread-count="3">
+<!--Cách set parallel để chạy song song-->
+<!-- Nếu set parallel = "tests", nó sẽ chạy hết các test ở dưới cùng lúc -->
+<!-- Nếu set parallel = "classes", nó sẽ chạy hết các class trong 1 test cùng lúc -->
+<!-- Thông thường chạy parallel sẽ chọn phạm vi là classes hoặc là tests -->
+
+<!-- Khái niệm : thread-counts -> nghĩa là sẽ cho chạy bao nhiêu luồng một lúc-->
+<!-- Bao nhiêu tests cùng 1 lúc, bao nhiêu class một lúc, nếu không set thì sẽ mặc định là 5 -->
+<!-- Con số này sẽ được tính toán dựa trên nguồn ngân sách, resource (bao nhiêu máy. bao nhiêu device chạy cùng 1 lúc được)-->
+<!-- ==> Parallel chạy trên 1 máy sẽ không phù hợp, vì khi chạy trên 1 máy phải share các tài nguyên của máy
+một số chức năng sẽ bị xung đột, Vd : hover, nếu chạy song song chuột sẽ di chuyển sai vị trí.... Hai browser đang đọc chung
+1 file excel, cùng thao tác lên một thư mục -->
+    <parameter name="server" value="Production" />
+    <test name="Run on Chrome">
+        <parameter name="browser" value="Chrome"/>
+        <classes>
+            <class name="testng.Topic_09_Parallel"/>
+        </classes>
+    </test>
+
+    <test name="Run on Edge">
+        <parameter name="browser" value="Edge"/>
+        <classes>
+            <class name="testng.Topic_09_Parallel"/>
+        </classes>
+    </test>
+
+    <test name="Run on Firefox">
+        <parameter name="browser" value="Firefox"/>
+        <classes>
+            <class name="testng.Topic_09_Parallel"/>
+        </classes>
+    </test>
+</suite>

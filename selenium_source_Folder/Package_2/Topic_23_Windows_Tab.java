@@ -13,6 +13,10 @@ import org.testng.annotations.Test;
 import java.time.Duration;
 import java.util.Set;
 
+// NOTE : Hành vi switch Tab/Window cũng giống như hành vi mở một window/tab mới và focus vào tab đó . Vì sẽ có trường hợp
+// khi mở một tab/window mới, trong code switch về tab/window cũ thì tab/window mới mở sẽ tự động đóng đi. Vì có nhiều trang web cơ
+// chế sẽ như vậy. Nên khi muốn quay lại tab/window  đã đóng thì sẽ không tìm thấy nữa
+
 public class Topic_23_Windows_Tab {
     //1- Setup: OS/Browser/Web/Page/ Data/Variable/Object/..
 

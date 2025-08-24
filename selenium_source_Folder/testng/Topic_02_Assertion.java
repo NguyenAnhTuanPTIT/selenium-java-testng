@@ -38,7 +38,7 @@ public class Topic_02_Assertion {
         // Các hàm do user define
         Assert.assertTrue(driver.findElement(By.cssSelector("")).isDisplayed());
 
-        // AssertFalse : khi kiểm tra 1 điều kiện mong đợi nó sẽ trả về là SAI
+        // AssertFalse : khi kiểm tra 1 điều kiện mong đợi nó sẽ trả     về là SAI
         // Mong đợi cái button Login disable
         Assert.assertFalse(driver.findElement(By.cssSelector("")).isEnabled());
 
