@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Preserve Order">
+    <!-- Nếu preserve-order = true , chạy các class theo thứ tự từ trên xuống trong file XML -->
+    <!-- Nếu preserve-order = false , chạy các class theo thứ tự từ trên xuống trong file package -->
+    <test name="Run on Chrome" preserve-order="true">
+        <classes>
+            <class name="testng.Topic_02_Assertion"/>
+            <class name="testng.Topic_04_Always_Run"/>
+            <class name="testng.Topic_01_Annotations"/>
+            <class name="testng.Topic_06_Skip_Testcase"/>
+            <class name="testng.Topic_05_Priority"/>
+            <class name="testng.Topic_07_Description"/>
+            <class name="testng.Topic_10_Loop"/>
+            <class name="testng.Topic_11_Timeout"/>
+            <class name="testng.Topic_03_Group"/>
+            <class name="testng.Topic_08_Data_Provider"/>
+            <class name="testng.Topic_09_Parallel"/>
+        </classes>
+    </test>
+</suite>

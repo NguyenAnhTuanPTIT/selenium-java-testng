@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<!-- Suite này dành cho chạy chức năng Payment -->
+<suite name="Payment">
+    <test name="Run on Chrome">
+        <classes>
+            <class name="Payment.Payment_01"/>
+        </classes>
+    </test>
+</suite>
