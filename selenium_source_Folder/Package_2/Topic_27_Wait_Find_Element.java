@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 import java.time.Duration;
 import java.util.List;
 
-public class Topic_27_Wait_Find_Element {
+public class    Topic_27_Wait_Find_Element {
     //1- Setup: OS/Browser/Web/Page/ Data/Variable/Object/..
 
     WebDriver driver;
@@ -92,6 +92,7 @@ public class Topic_27_Wait_Find_Element {
         //   + 1. Trả về list element = 0
         //   + 2. KHÔNG ĐÁNH FAIL TESTCASE
         elements = driver.findElements(By.cssSelector("input#RememberMe"));
+        elements.isEmpty();
         System.out.println(elements.size());
         Assert.assertEquals(elements.size(),0);
 

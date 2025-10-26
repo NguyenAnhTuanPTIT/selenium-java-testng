@@ -68,6 +68,8 @@ public class Topic_32_Page_Ready {
 
         // Click vào Button Logout
         driver.findElement(By.xpath("//a[text()='Logout']")).click();
+        driver.findElement(By.xpath("//a[text()='Logout']")).isDisplayed();
+
 
         // Wait cho login form hiển thị
         Assert.assertTrue(explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.form-fields"))).isDisplayed());

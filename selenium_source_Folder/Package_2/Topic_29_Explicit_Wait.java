@@ -49,8 +49,16 @@ public class Topic_29_Explicit_Wait {
         // Wait cho element không hiển thị (còn hoặc không còn trong HTML)
         explicitWait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("")));
 
+        ///explicitWait.until(ExpectedConditions.invisibilityOf(By.cssSelector("")));
+
         // Wait cho element được hiển thị (có trong HTML và có trên UI)
         explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("")));
+
+        // Wait cho các element được hiển thị
+        explicitWait.until(ExpectedConditions.visibilityOfAllElements(
+                driver.findElement(By.cssSelector("")),
+                driver.findElement(By.cssSelector("")),
+                driver.findElement(By.cssSelector(""))));
 
         // Wait cho element được phép click (button / radio / checkbox / linktext / ....)
         explicitWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("")));
