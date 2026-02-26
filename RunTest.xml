@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding = "UTF-8"?>
-<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd"[
+        <!--  Khai báo kiểu này để thay thế cho việc  khai báo lặp lại tên package.tên class      -->
+        <!ENTITY testClass "testng.Topic_09_Optional">
+        ]>
 
 <suite name="Suite1" verbose="1">
 
@@ -82,21 +85,21 @@
     <test name="Run on Chrome">
 <!--        <parameter name="browser" value="Chrome"/>-->
         <classes>
-            <class name="testng.Topic_09_Optional"/>
+            <class name="&testClass;"/>
         </classes>
     </test>
 
     <test name="Run on Edge">
 <!--        <parameter name="browser" value="Edge"/>-->
         <classes>
-            <class name="testng.Topic_09_Optional"/>
+            <class name="&testClass;"/>
         </classes>
     </test>
 
     <test name="Run on Firefox">
 <!--        <parameter name="browser" value="Firefox"/>-->
         <classes>
-            <class name="testng.Topic_09_Optional"/>
+            <class name="&testClass;"/>
         </classes>
     </test>
 

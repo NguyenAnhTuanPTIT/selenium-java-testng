@@ -51,5 +51,15 @@ public class Topic_08_For {
         }while(u < number); // Kiểm tra điều kiện sau
     }
 
+    public int getNum(int a){
+        return 5;
+    }
+
+    public String getNum(){
+        return "ACD";
+    }
+
+
+
 
 }
